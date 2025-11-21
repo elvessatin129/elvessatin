@@ -1,0 +1,3 @@
+# Lines can be "Name,Email" or just "Email"
+Alice Example,alice@example.com
+bob@example.com

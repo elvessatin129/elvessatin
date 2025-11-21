@@ -1,0 +1,48 @@
+{
+  "login": {
+    "email": [
+      {"type": "css", "value": "input[type='email']"},
+      {"type": "css", "value": "input[name='email']"},
+      {"type": "label", "value": "Email"}
+    ],
+    "password": [
+      {"type": "css", "value": "input[type='password']"},
+      {"type": "label", "value": "Password"}
+    ],
+    "submit": [
+      {"type": "css", "value": "button[type='submit']"},
+      {"type": "role", "role": "button", "name": "Sign in"}
+    ]
+  },
+  "navigation": {
+    "contacts_ready": [
+      {"type": "css", "value": "[data-testid='contacts-list']"},
+      {"type": "text", "value": "Contacts", "exact": false}
+    ]
+  },
+  "contacts": {
+    "open_add_modal": [
+      {"type": "css", "value": "button[data-testid='add-contact-button']"},
+      {"type": "role", "role": "button", "name": "Add contact"}
+    ],
+    "email_input": [
+      {"type": "css", "value": "input[type='email']"},
+      {"type": "css", "value": "input[name='email']"}
+    ],
+    "name_input": [
+      {"type": "css", "value": "input[name='alias']"},
+      {"type": "placeholder", "value": "Name"}
+    ],
+    "confirm_button": [
+      {"type": "role", "role": "button", "name": "Add"},
+      {"type": "css", "value": "button[data-testid='confirm-add-contact']"}
+    ],
+    "success_indicator": [
+      {"type": "css", "value": "[data-testid='toast-success']"},
+      {"type": "css", "value": ".ms-MessageBar--success"}
+    ],
+    "close_modal": [
+      {"type": "css", "value": "button[aria-label='Close']"}
+    ]
+  }
+}
