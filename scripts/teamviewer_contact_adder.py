@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import csv
 import getpass
 import json
 import os
@@ -261,21 +260,21 @@ def ensure_parent_directory(path: Path) -> None:
 
 def write_success_log(path: Path, contacts: Iterable[ContactRequest]) -> None:
     ensure_parent_directory(path)
-    with path.open("w", encoding="utf-8", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["name", "email"])
+    with path.open("w", encoding="utf-8") as handle:
+        handle.write("name,email\n")
         for contact in contacts:
-            writer.writerow([contact.resolved_name(), contact.email])
+            handle.write(f"{contact.resolved_name()},{contact.email}\n")
 
 
 def write_failure_log(path: Path, rows: Iterable[Dict[str, str]]) -> None:
     ensure_parent_directory(path)
-    fieldnames = ["email", "name", "error"]
-    with path.open("w", encoding="utf-8", newline="") as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
+    with path.open("w", encoding="utf-8") as handle:
+        handle.write("email,name,error\n")
         for row in rows:
-            writer.writerow(row)
+            email = row.get("email", "")
+            name = row.get("name", "")
+            error = row.get("error", "").replace("\n", " ").replace("\r", " ")
+            handle.write(f"{email},{name},{error}\n")
 
 
 def parse_args() -> argparse.Namespace:
@@ -283,8 +282,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--username", required=True, help="TeamViewer account email address")
     parser.add_argument("--password", help="TeamViewer password. If omitted, you will be prompted.")
     parser.add_argument("--email-file", default="data/sample_contacts.txt", type=Path, help="Path to the txt file containing contacts")
-    parser.add_argument("--success-log", default=Path("data/successful_contacts.csv"), type=Path, help="Where to write successfully added contacts")
-    parser.add_argument("--failure-log", default=Path("data/failed_contacts.csv"), type=Path, help="Optional CSV to record failures")
+    parser.add_argument("--success-log", default=Path("data/successful_contacts.txt"), type=Path, help="Where to write successfully added contacts (plain text)")
+    parser.add_argument("--failure-log", default=Path("data/failed_contacts.txt"), type=Path, help="Optional plain-text file to record failures")
     parser.add_argument("--selectors", type=Path, default=None, help="Path to a JSON file overriding selector defaults")
     parser.add_argument("--headless", action="store_true", help="Run the browser in headless mode")
     parser.add_argument("--slowmo", type=int, default=0, help="Delay (ms) between Playwright actions for debugging")

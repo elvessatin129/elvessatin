@@ -4,8 +4,8 @@
 
 1. 从本地 TXT 文件读取邮箱列表（可选带名称）。
 2. 自动登录网页端并打开联系人页。
-3. 逐个添加联系人，成功后把“名称 + 邮箱”写入 `data/successful_contacts.csv`。
-4. 失败的项目可以写入 `data/failed_contacts.csv` 方便排查。
+3. 逐个添加联系人，成功后把“名称 + 邮箱”写入 `data/successful_contacts.txt`。
+4. 失败的项目可以写入 `data/failed_contacts.txt` 方便排查。
 
 > 说明：由于 TeamViewer 网页 UI 可能随版本变动，脚本依赖的 CSS/可访问性选择器可能需要你根据实际页面调整。仓库提供 `config/selectors.example.json` 作为示例模板。
 
@@ -58,8 +58,8 @@ python scripts/teamviewer_contact_adder.py \
   --username your_account@example.com \
   --email-file data/sample_contacts.txt \
   --selectors config/selectors.json \
-  --success-log data/successful_contacts.csv \
-  --failure-log data/failed_contacts.csv
+  --success-log data/successful_contacts.txt \
+  --failure-log data/failed_contacts.txt
 ```
 
 运行时如未传 `--password`，程序会安全地提示输入；也可预先设置环境变量 `TEAMVIEWER_PASSWORD`。
@@ -73,8 +73,8 @@ python scripts/teamviewer_contact_adder.py \
 
 ## 输出文件
 
-- `data/successful_contacts.csv`：成功添加的联系人（只包含名称与邮箱）。
-- `data/failed_contacts.csv`：失败记录（邮箱、可能的名称、错误原因）。
+- `data/successful_contacts.txt`：成功添加的联系人（只包含名称与邮箱）。
+- `data/failed_contacts.txt`：失败记录（邮箱、可能的名称、错误原因）。
 
 > 根据你的需求，第 2、3 点——只记录添加成功且确实存在的邮箱——已经内置在逻辑里：只有检测到成功提示时才会写入成功表；未检测到成功提示就视为失败，不会保存。
 
